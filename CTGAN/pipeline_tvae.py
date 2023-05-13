@@ -4,7 +4,7 @@ import os
 import argparse
 from train_sample_tvae import train_tvae, sample_tvae
 from scripts.eval_catboost import train_catboost
-import zero
+import delu as zero
 import lib
 
 def load_config(path) :

@@ -5,7 +5,7 @@ import argparse
 from sample_smote import sample_smote
 from scripts.eval_catboost import train_catboost
 # from scripts.eval_mlp import train_mlp
-import zero
+import delu as zero
 import lib
 
 def load_config(path) :

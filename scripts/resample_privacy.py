@@ -6,7 +6,7 @@ import argparse
 import lib
 import os
 import shutil
-import zero
+import delu as zero
 from sample import sample
 from smote.sample_smote import sample_smote
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder

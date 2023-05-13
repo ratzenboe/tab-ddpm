@@ -9,7 +9,7 @@ from eval_mlp import train_mlp
 from eval_simple import train_simple
 import pandas as pd
 import matplotlib.pyplot as plt
-import zero
+import delu as zero
 import lib
 import torch
 
