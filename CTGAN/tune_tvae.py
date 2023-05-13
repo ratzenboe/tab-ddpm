@@ -149,5 +149,5 @@ train_tvae(
 
 lib.dump_config(config, config["parent_dir"]+"config.toml")
 
-subprocess.run(['python3.9', "scripts/eval_seeds.py", '--config', f'{config["parent_dir"]+"config.toml"}',
+subprocess.run(['python', "scripts/eval_seeds.py", '--config', f'{config["parent_dir"]+"config.toml"}',
                 '10', "tvae", eval_type, "catboost", "5"], check=True)

@@ -57,7 +57,7 @@ def eval_seeds(
             temp_config['sample']['seed'] = sample_seed
             lib.dump_config(temp_config, dir_ / "config.toml")
             if eval_type != 'real':
-                subprocess.run(['python3.9', f'{pipeline[sampling_method]}', '--config', f'{str(dir_ / "config.toml")}', '--sample'], check=True)
+                subprocess.run(['python', f'{pipeline[sampling_method]}', '--config', f'{str(dir_ / "config.toml")}', '--sample'], check=True)
 
             for seed in range(n_seeds):
                 print(f'**Eval Iter: {sample_seed*n_seeds + (seed + 1)}/{n_seeds * n_datasets}**')

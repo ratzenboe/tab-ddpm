@@ -424,7 +424,7 @@ def get_temporary_copy(path: Union[str, Path]) -> Path:
 
 
 def get_python():
-    python = Path('python3.9')
+    python = Path('python')
     return str(python) if python.exists() else 'python'
 
 def get_catboost_config(real_data_path, is_cv=False):
