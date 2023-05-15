@@ -8,8 +8,10 @@ from utils_train import get_model, make_dataset, update_ema
 import lib
 import pandas as pd
 
+DEFAULT_DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+
 class Trainer:
-    def __init__(self, diffusion, train_iter, lr, weight_decay, steps, device=torch.device('cuda:1')):
+    def __init__(self, diffusion, train_iter, lr, weight_decay, steps, device=DEFAULT_DEVICE):
         self.diffusion = diffusion
         self.ema_model = deepcopy(self.diffusion._denoise_fn)
         for param in self.ema_model.parameters():
@@ -88,7 +90,7 @@ def train(
     scheduler = 'cosine',
     T_dict = None,
     num_numerical_features = 0,
-    device = torch.device('cuda:1'),
+    device = DEFAULT_DEVICE,
     seed = 0,
     change_val = False
 ):

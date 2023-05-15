@@ -13,6 +13,8 @@ import delu as zero
 import lib
 import torch
 
+DEFAULT_DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+
 def load_config(path) :
     with open(path, 'rb') as f:
         return tomli.load(f)
@@ -38,7 +40,7 @@ def main():
     if 'device' in raw_config:
         device = torch.device(raw_config['device'])
     else:
-        device = torch.device('cuda:1')
+        device = DEFAULT_DEVICE
     
     timer = zero.Timer()
     timer.run()

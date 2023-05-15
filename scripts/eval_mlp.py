@@ -13,6 +13,9 @@ from skorch.callbacks import EarlyStopping, EpochScoring
 from skorch.helper import predefined_split
 from torch.optim import AdamW
 from torch.nn import MSELoss, BCEWithLogitsLoss, CrossEntropyLoss
+import torch
+
+DEFAULT_DEVICE = 'cuda:0' if torch.cuda.is_available() else "cpu"
 
 def train_mlp(
     parent_dir,
@@ -22,7 +25,7 @@ def train_mlp(
     params = None,
     change_val = False,
     seed = 0,
-    device = "cuda:0"
+    device = DEFAULT_DEVICE
 ):
     zero.improve_reproducibility(seed)
     synthetic_data_path = os.path.join(parent_dir) if parent_dir is not None else None

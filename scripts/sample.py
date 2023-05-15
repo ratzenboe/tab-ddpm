@@ -8,6 +8,8 @@ from utils_train import get_model, make_dataset
 from lib import round_columns
 import lib
 
+DEFAULT_DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+
 def to_good_ohe(ohe, X):
     indices = np.cumsum([0] + ohe._n_features_outs)
     Xres = []
@@ -31,7 +33,7 @@ def sample(
     T_dict = None,
     num_numerical_features = 0,
     disbalance = None,
-    device = torch.device('cuda:1'),
+    device = DEFAULT_DEVICE,
     seed = 0,
     change_val = False
 ):
