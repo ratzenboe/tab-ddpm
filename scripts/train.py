@@ -23,8 +23,8 @@ class Trainer:
         self.optimizer = torch.optim.AdamW(self.diffusion.parameters(), lr=lr, weight_decay=weight_decay)
         self.device = device
         self.loss_history = pd.DataFrame(columns=['step', 'mloss', 'gloss', 'loss'])
-        self.log_every = 100
-        self.print_every = 500
+        self.log_every = 10
+        self.print_every = 10
         self.ema_every = 1000
 
     def _anneal_lr(self, step):
