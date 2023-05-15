@@ -37,8 +37,8 @@ def main():
 
     args = parser.parse_args()
     raw_config = lib.load_config(args.config)
-    if 'device' in raw_config:
-        device = torch.device(raw_config['device'])
+    if 'device' in raw_config and torch.cuda.is_available():
+        device = torch.device(raw_config['device'] if torch.cuda.is_available() else "cpu")
     else:
         device = DEFAULT_DEVICE
     

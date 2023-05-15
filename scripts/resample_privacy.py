@@ -134,7 +134,7 @@ def sample_wrapper(method, config, num_samples=None, seed=0):
             num_numerical_features=config['num_numerical_features'],
             seed=seed,
             change_val=False,
-            device=torch.device(config["device"])
+            device=torch.device(config["device"] if torch.cuda.is_available() else "cpu")
         )
     elif method == "smote":
         sample_smote(

@@ -40,7 +40,7 @@ def main():
             real_data_path=raw_config['real_data_path'],
             train_params=raw_config['train_params'],
             change_val=args.change_val,
-            device=raw_config['device']
+            device=raw_config['device'] if torch.cuda.is_available() else "cpu"
         )
     if args.sample:
         sample_ctabgan(
@@ -51,7 +51,7 @@ def main():
             train_params=raw_config['train_params'],
             change_val=args.change_val,
             seed=raw_config['sample']['seed'],
-            device=raw_config['device']
+            device=raw_config['device'] if torch.cuda.is_available() else "cpu"
         )
 
     save_file(os.path.join(raw_config['parent_dir'], 'info.json'), os.path.join(raw_config['real_data_path'], 'info.json'))

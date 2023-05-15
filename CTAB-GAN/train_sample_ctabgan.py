@@ -16,7 +16,7 @@ def train_ctabgan(
 ):
     real_data_path = Path(real_data_path)
     parent_dir = Path(parent_dir)
-    device = torch.device(device)
+    device = torch.device(device if torch.cuda.is_available() else "cpu")
 
     if change_val:
         X_num_train, X_cat_train, y_train, _, _, _ = lib.read_changed_val(real_data_path)
@@ -59,7 +59,7 @@ def sample_ctabgan(
 ):
     real_data_path = Path(real_data_path)
     parent_dir = Path(parent_dir)
-    device = torch.device(device)
+    device = torch.device(device if torch.cuda.is_available() else "cpu")
 
     if change_val:
         X_num_train, X_cat_train, y_train, _, _, _ = lib.read_changed_val(real_data_path)
