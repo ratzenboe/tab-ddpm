@@ -14,7 +14,7 @@ skorch
 tomli-w==0.4.0
 tomli==1.2.2
 tqdm==4.62.3
-torch==1.10.1+cu111
+torch>=1.10.1+cu111
 delu
 rtdl
 # smote
