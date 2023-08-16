@@ -7,8 +7,8 @@ from tab_ddpm import lib
 import os
 import shutil
 import delu as zero
-from sample import sample
-from smote.sample_smote import sample_smote
+from .sample import sample
+from tab_ddpm.smote.sample_smote import sample_smote
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.metrics import pairwise_distances
 from pathlib import Path

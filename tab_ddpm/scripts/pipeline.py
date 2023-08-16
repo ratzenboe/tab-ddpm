@@ -2,8 +2,8 @@ import tomli
 import shutil
 import os
 import argparse
-from train import train as _train
-from sample import sample as _sample
+from .train import train as _train
+from .sample import sample as _sample
 from eval_catboost import train_catboost
 from eval_mlp import train_mlp
 from eval_simple import train_simple

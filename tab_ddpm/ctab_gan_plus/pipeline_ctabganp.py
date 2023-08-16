@@ -6,7 +6,7 @@ from .train_sample_ctabganp import train_ctabgan, sample_ctabgan
 from tab_ddpm.scripts.eval_catboost import train_catboost
 import delu as zero
 from tab_ddpm import lib
-from model.ctabgan import CTABGAN
+from .model.ctabgan import CTABGAN
 
 def load_config(path) :
     with open(path, 'rb') as f:

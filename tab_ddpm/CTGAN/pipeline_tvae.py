@@ -2,7 +2,7 @@ import tomli
 import shutil
 import os
 import argparse
-from train_sample_tvae import train_tvae, sample_tvae
+from .train_sample_tvae import train_tvae, sample_tvae
 from tab_ddpm.scripts.eval_catboost import train_catboost
 import delu as zero
 from tab_ddpm import lib
