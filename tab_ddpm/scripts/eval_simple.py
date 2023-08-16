@@ -4,7 +4,7 @@ from sklearn.utils import shuffle
 import delu as zero
 from pathlib import Path
 from tab_ddpm import lib
-from ..lib import concat_features, read_pure_data, read_changed_val
+from tab_ddpm.lib import concat_features, read_pure_data, read_changed_val
 from sklearn.utils import shuffle
 from tab_ddpm import lib
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
