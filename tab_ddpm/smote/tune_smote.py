@@ -7,7 +7,7 @@ from pathlib import Path
 import os
 from tab_ddpm.scripts.eval_catboost import train_catboost
 from tab_ddpm.scripts.eval_seeds import main as eval_seeds
-from sample_smote import sample_smote
+from .sample_smote import sample_smote
 #import subprocess
 
 parser = argparse.ArgumentParser()

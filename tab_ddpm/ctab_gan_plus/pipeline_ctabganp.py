@@ -2,7 +2,7 @@ import tomli
 import shutil
 import os
 import argparse
-from train_sample_ctabganp import train_ctabgan, sample_ctabgan
+from .train_sample_ctabganp import train_ctabgan, sample_ctabgan
 from tab_ddpm.scripts.eval_catboost import train_catboost
 import delu as zero
 from tab_ddpm import lib

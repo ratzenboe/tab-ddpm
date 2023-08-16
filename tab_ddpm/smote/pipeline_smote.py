@@ -2,7 +2,7 @@ import tomli
 import shutil
 import os
 import argparse
-from sample_smote import sample_smote
+from .sample_smote import sample_smote
 from tab_ddpm.scripts.eval_catboost import train_catboost
 # from tab_ddpm.scripts.eval_mlp import train_mlp
 import delu as zero
