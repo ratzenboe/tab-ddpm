@@ -6,9 +6,9 @@ import os
 import shutil
 from pathlib import Path
 from copy import deepcopy
-from scripts.eval_catboost import train_catboost
-from scripts.eval_mlp import train_mlp
-from scripts.eval_simple import train_simple
+from tab_ddpm.scripts.eval_catboost import train_catboost
+from tab_ddpm.scripts.eval_mlp import train_mlp
+from tab_ddpm.scripts.eval_simple import train_simple
 
 pipeline = {
     'ddpm': 'scripts/pipeline.py',

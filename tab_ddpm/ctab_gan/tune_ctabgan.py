@@ -7,7 +7,7 @@ import optuna
 import argparse
 from pathlib import Path
 from train_sample_ctabgan import train_ctabgan, sample_ctabgan
-from scripts.eval_catboost import train_catboost
+from tab_ddpm.scripts.eval_catboost import train_catboost
 
 parser = argparse.ArgumentParser()
 parser.add_argument('data_path', type=str)

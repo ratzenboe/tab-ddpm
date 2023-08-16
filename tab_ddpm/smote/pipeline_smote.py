@@ -3,8 +3,8 @@ import shutil
 import os
 import argparse
 from sample_smote import sample_smote
-from scripts.eval_catboost import train_catboost
-# from scripts.eval_mlp import train_mlp
+from tab_ddpm.scripts.eval_catboost import train_catboost
+# from tab_ddpm.scripts.eval_mlp import train_mlp
 import delu as zero
 from tab_ddpm import lib
 

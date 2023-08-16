@@ -5,7 +5,7 @@ import argparse
 import tempfile
 from pathlib import Path
 import os
-from scripts.eval_catboost import train_catboost
+from tab_ddpm.scripts.eval_catboost import train_catboost
 from sample_smote import sample_smote
 import subprocess
 
