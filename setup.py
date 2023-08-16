@@ -10,7 +10,7 @@ setup(
     license='',
     packages=setuptools.find_packages(),
     install_requires=[
-        "torch>=1.10.1+cu111",
+        "torch>=1.10.1",
         "catboost~=1.0.3",
         "category-encoders~=2.3.0",
         "dython~=0.5.1",
