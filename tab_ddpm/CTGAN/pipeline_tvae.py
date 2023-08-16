@@ -5,7 +5,7 @@ import argparse
 from train_sample_tvae import train_tvae, sample_tvae
 from scripts.eval_catboost import train_catboost
 import delu as zero
-import lib
+from tab_ddpm import lib
 
 def load_config(path) :
     with open(path, 'rb') as f:

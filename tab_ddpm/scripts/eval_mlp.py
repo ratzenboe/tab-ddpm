@@ -4,7 +4,7 @@ import os
 from sklearn.utils import shuffle
 import delu as zero
 from pathlib import Path
-import lib
+from tab_ddpm import lib
 from tab_ddpm.modules import MLP
 from skorch.regressor import NeuralNetRegressor
 from skorch.classifier import NeuralNetClassifier

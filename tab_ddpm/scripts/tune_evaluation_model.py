@@ -1,5 +1,5 @@
 import optuna
-import lib
+from tab_ddpm import lib
 import argparse
 from eval_catboost import train_catboost
 from eval_mlp import train_mlp

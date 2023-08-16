@@ -1,5 +1,5 @@
 import os
-import lib
+from tab_ddpm import lib
 import argparse
 import numpy as np
 from pathlib import Path

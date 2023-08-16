@@ -3,7 +3,7 @@ Adapted from https://github.com/Team-TUD/CTAB-GAN/tree/main/model/eval
 """
 
 import argparse
-import lib
+from tab_ddpm import lib
 import os
 import shutil
 import delu as zero

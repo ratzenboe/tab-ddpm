@@ -2,7 +2,7 @@ from multiprocessing.sharedctypes import RawValue
 from random import random
 import tempfile
 import subprocess
-import lib
+from tab_ddpm import lib
 import os
 import optuna
 import argparse

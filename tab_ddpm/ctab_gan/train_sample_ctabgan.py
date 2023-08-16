@@ -1,4 +1,4 @@
-import lib
+from tab_ddpm import lib
 import os
 import numpy as np
 import argparse

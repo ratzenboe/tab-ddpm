@@ -3,10 +3,10 @@ import os
 from sklearn.utils import shuffle
 import delu as zero
 from pathlib import Path
-import lib
-from lib import concat_features, read_pure_data, read_changed_val
+from tab_ddpm import lib
+from ..lib import concat_features, read_pure_data, read_changed_val
 from sklearn.utils import shuffle
-import lib
+from tab_ddpm import lib
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression, Ridge

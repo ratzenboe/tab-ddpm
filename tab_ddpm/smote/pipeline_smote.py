@@ -6,7 +6,7 @@ from sample_smote import sample_smote
 from scripts.eval_catboost import train_catboost
 # from scripts.eval_mlp import train_mlp
 import delu as zero
-import lib
+from tab_ddpm import lib
 
 def load_config(path) :
     with open(path, 'rb') as f:

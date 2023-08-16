@@ -5,7 +5,7 @@ import numpy as np
 import delu as zero
 from tab_ddpm import GaussianMultinomialDiffusion
 from utils_train import get_model, make_dataset, update_ema
-import lib
+from tab_ddpm import lib
 import pandas as pd
 
 DEFAULT_DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")

@@ -1,7 +1,7 @@
 import argparse
 import subprocess
 import tempfile
-import lib
+from tab_ddpm import lib
 import os
 import shutil
 from pathlib import Path

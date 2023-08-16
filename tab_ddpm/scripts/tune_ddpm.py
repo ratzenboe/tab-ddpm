@@ -1,5 +1,5 @@
 import subprocess
-import lib
+from tab_ddpm import lib
 import os
 import optuna
 from copy import deepcopy

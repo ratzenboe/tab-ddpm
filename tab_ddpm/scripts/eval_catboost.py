@@ -5,9 +5,9 @@ import os
 from sklearn.utils import shuffle
 import delu as zero
 from pathlib import Path
-import lib
+from tab_ddpm import lib
 from pprint import pprint
-from lib import concat_features, read_pure_data, get_catboost_config, read_changed_val
+from ..lib import concat_features, read_pure_data, get_catboost_config, read_changed_val
 
 def train_catboost(
     parent_dir,

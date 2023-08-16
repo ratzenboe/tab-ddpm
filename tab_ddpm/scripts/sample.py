@@ -5,8 +5,8 @@ import os
 from tab_ddpm.gaussian_multinomial_diffsuion import GaussianMultinomialDiffusion
 from tab_ddpm.utils import FoundNANsError
 from utils_train import get_model, make_dataset
-from lib import round_columns
-import lib
+from ..lib import round_columns
+from tab_ddpm import lib
 
 DEFAULT_DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
 

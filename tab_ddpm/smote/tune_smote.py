@@ -1,5 +1,5 @@
 import optuna
-import lib
+from tab_ddpm import lib
 from copy import deepcopy
 import argparse
 import tempfile

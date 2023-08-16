@@ -10,7 +10,7 @@ from eval_simple import train_simple
 import pandas as pd
 import matplotlib.pyplot as plt
 import delu as zero
-import lib
+from tab_ddpm import lib
 import torch
 
 DEFAULT_DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
