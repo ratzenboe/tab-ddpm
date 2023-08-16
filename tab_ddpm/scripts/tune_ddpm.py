@@ -1,4 +1,4 @@
-import subprocess
+#import subprocess
 from tab_ddpm import lib
 import os
 import optuna
@@ -6,6 +6,8 @@ from copy import deepcopy
 import shutil
 import argparse
 from pathlib import Path
+from tab_ddpm.scripts.eval_seeds import main as eval_seeds
+from tab_ddpm.scripts.pipeline import main as pipeline
 
 parser = argparse.ArgumentParser()
 parser.add_argument('ds_name', type=str)
@@ -22,7 +24,7 @@ eval_type = args.eval_type
 assert eval_type in ('merged', 'synthetic')
 prefix = str(args.prefix)
 
-pipeline = f'tab_ddpm/scripts/pipeline.py'
+pipeline_path = f'tab_ddpm/scripts/pipeline.py'
 base_config_path = f'exp/{ds_name}/config.toml'
 parent_path = Path(f'exp/{ds_name}/')
 exps_path = Path(f'exp/{ds_name}/many-exps/') # temporary dir. maybe will be replaced with tempdiвdr
@@ -82,7 +84,12 @@ def objective(trial):
 
     lib.dump_config(base_config, exps_path / 'config.toml')
 
-    subprocess.run(['python', f'{pipeline}', '--config', f'{exps_path / "config.toml"}', '--train', '--change_val'], check=True)
+    #subprocess.run(['python', f'{pipeline_path}', '--config', f'{exps_path / "config.toml"}', '--train', '--change_val'], check=True)
+    pipeline(
+        config=f'{exps_path / "config.toml"}',
+        train=True,
+        change_val=True
+    )
 
     n_datasets = 5
     score = 0.0
@@ -91,7 +98,13 @@ def objective(trial):
         base_config['sample']['seed'] = sample_seed
         lib.dump_config(base_config, exps_path / 'config.toml')
         
-        subprocess.run(['python', f'{pipeline}', '--config', f'{exps_path / "config.toml"}', '--sample', '--eval', '--change_val'], check=True)
+        #subprocess.run(['python', f'{pipeline_path}', '--config', f'{exps_path / "config.toml"}', '--sample', '--eval', '--change_val'], check=True)
+        pipeline(
+            config=f'{exps_path / "config.toml"}',
+            sample=True,
+            eval=True,
+            change_val=True
+        )
 
         report_path = str(Path(base_config['parent_dir']) / f'results_{args.eval_model}.json')
         report = lib.load_json(report_path)
@@ -120,8 +133,21 @@ os.makedirs(parent_path / f'{prefix}_best', exist_ok=True)
 lib.dump_config(best_config, best_config_path)
 lib.dump_json(optuna.importance.get_param_importances(study), parent_path / f'{prefix}_best/importance.json')
 
-subprocess.run(['python', f'{pipeline}', '--config', f'{best_config_path}', '--train', '--sample'], check=True)
+#subprocess.run(['python', f'{pipeline_path}', '--config', f'{best_config_path}', '--train', '--sample'], check=True)
+pipeline(
+    config=f'{best_config_path}',
+    train=True,
+    sample=True
+)
 
 if args.eval_seeds:
     best_exp = str(parent_path / f'{prefix}_best/config.toml')
-    subprocess.run(['python', f'{eval_seeds}', '--config', f'{best_exp}', '10', "ddpm", eval_type, args.eval_model, '5'], check=True)
+    #subprocess.run(['python', f'{eval_seeds}', '--config', f'{best_exp}', '10', "ddpm", eval_type, args.eval_model, '5'], check=True)
+    eval_seeds(
+        config=f'{best_exp}',
+        n_seeds=10,
+        sampling_method="ddpm",
+        eval_type=eval_type,
+        model_type=eval_model,
+        n_datasets=5
+    )

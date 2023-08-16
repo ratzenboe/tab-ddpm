@@ -20,14 +20,21 @@ def save_file(parent_dir, config_path):
     except shutil.SameFileError:
         pass
 
-def main():
+def main(
+    config=None,
+    sample=False,
+    eval=False,
+    change_val=False
+):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', metavar='FILE')
-    parser.add_argument('--sample', action='store_true',  default=False)
-    parser.add_argument('--eval', action='store_true',  default=False)
-    parser.add_argument('--change_val', action='store_true',  default=False)
+    parser.add_argument('--config', metavar='FILE', default=config)
+    parser.add_argument('--sample', action='store_true',  default=sample)
+    parser.add_argument('--eval', action='store_true',  default=eval)
+    parser.add_argument('--change_val', action='store_true',  default=change_val)
 
     args = parser.parse_args()
+    assert args.config
+
     raw_config = lib.load_config(args.config)
     timer = zero.Timer()
     timer.run()

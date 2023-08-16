@@ -2,8 +2,8 @@ import tomli
 import shutil
 import os
 import argparse
-from train import train
-from sample import sample
+from train import train as _train
+from sample import sample as _sample
 from eval_catboost import train_catboost
 from eval_mlp import train_mlp
 from eval_simple import train_simple
@@ -27,15 +27,23 @@ def save_file(parent_dir, config_path):
     except shutil.SameFileError:
         pass
 
-def main():
+def main(
+    config=None,
+    train=False,
+    sample=False,
+    eval=False,
+    change_val=False
+):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', metavar='FILE')
-    parser.add_argument('--train', action='store_true', default=False)
-    parser.add_argument('--sample', action='store_true',  default=False)
-    parser.add_argument('--eval', action='store_true',  default=False)
-    parser.add_argument('--change_val', action='store_true',  default=False)
+    parser.add_argument('--config', metavar='FILE', default=config)
+    parser.add_argument('--train', action='store_true', default=train)
+    parser.add_argument('--sample', action='store_true',  default=sample)
+    parser.add_argument('--eval', action='store_true',  default=eval)
+    parser.add_argument('--change_val', action='store_true',  default=change_val)
 
     args = parser.parse_args()
+    assert args.config
+
     raw_config = lib.load_config(args.config)
     if 'device' in raw_config and torch.cuda.is_available():
         device = torch.device(raw_config['device'] if torch.cuda.is_available() else "cpu")
@@ -47,7 +55,7 @@ def main():
     save_file(os.path.join(raw_config['parent_dir'], 'config.toml'), args.config)
 
     if args.train:
-        train(
+        _train(
             **raw_config['train']['main'],
             **raw_config['diffusion_params'],
             parent_dir=raw_config['parent_dir'],
@@ -60,7 +68,7 @@ def main():
             change_val=args.change_val
         )
     if args.sample:
-        sample(
+        _sample(
             num_samples=raw_config['sample']['num_samples'],
             batch_size=raw_config['sample']['batch_size'],
             disbalance=raw_config['sample'].get('disbalance', None),

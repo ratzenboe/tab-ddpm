@@ -1,6 +1,6 @@
 from multiprocessing.sharedctypes import RawValue
 import tempfile
-import subprocess
+#import subprocess
 from tab_ddpm import lib
 import os
 import optuna
@@ -8,6 +8,7 @@ import argparse
 from pathlib import Path
 from train_sample_tvae import train_tvae, sample_tvae
 from tab_ddpm.scripts.eval_catboost import train_catboost
+from tab_ddpm.scripts.eval_seeds import main as eval_seeds
 
 parser = argparse.ArgumentParser()
 parser.add_argument('data_path', type=str)
@@ -149,5 +150,12 @@ train_tvae(
 
 lib.dump_config(config, config["parent_dir"]+"config.toml")
 
-subprocess.run(['python', "scripts/eval_seeds.py", '--config', f'{config["parent_dir"]+"config.toml"}',
-                '10', "tvae", eval_type, "catboost", "5"], check=True)
+#subprocess.run(['python', "scripts/eval_seeds.py", '--config', f'{config["parent_dir"]+"config.toml"}', '10', "tvae", eval_type, "catboost", "5"], check=True)
+eval_seeds(
+    config=f'{config["parent_dir"]+"config.toml"}',
+    n_seeds=10,
+    sampling_method="tvae",
+    eval_type=eval_type,
+    model_type="catboost",
+    n_datasets=5
+)

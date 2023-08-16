@@ -1,5 +1,5 @@
 import argparse
-import subprocess
+#import subprocess
 import tempfile
 from tab_ddpm import lib
 import os
@@ -9,6 +9,11 @@ from pathlib import Path
 from eval_simple import train_simple
 from copy import deepcopy
 import shutil
+from tab_ddpm.scripts.pipeline import main as pipeline_ddpm
+from tab_ddpm.smote.pipeline_smote import main as pipeline_smote
+from tab_ddpm.ctab_gan.pipeline_ctabgan import main as pipeline_ctab_gan
+from tab_ddpm.ctab_gan_plus.pipeline_ctabganp import main as pipeline_ctab_gan_plus
+from tab_ddpm.ctgan.pipeline_tvae import main as pipeline_tvae
 
 pipeline = {
     'ddpm': 'scripts/pipeline.py',
@@ -16,6 +21,13 @@ pipeline = {
     'ctabgan': 'CTAB-GAN/pipeline_ctabgan.py',
     'ctabgan-plus': 'CTAB-GAN-Plus/pipeline_ctabganp.py',
     'tvae': 'CTGAN/pipeline_tvae.py'
+}
+pipelines = {
+    'ddpm': pipeline_ddpm,
+    'smote': pipeline_smote,
+    'ctabgan': pipeline_ctab_gan,
+    'ctabgan-plus': pipeline_ctab_gan_plus,
+    'tvae': pipeline_tvae
 }
 
 
@@ -57,7 +69,11 @@ def eval_seeds(
             temp_config['sample']['seed'] = sample_seed
             lib.dump_config(temp_config, dir_ / "config.toml")
             if eval_type != 'real':
-                subprocess.run(['python', f'{pipeline[sampling_method]}', '--config', f'{str(dir_ / "config.toml")}', '--sample'], check=True)
+                #subprocess.run(['python', f'{pipeline[sampling_method]}', '--config', f'{str(dir_ / "config.toml")}', '--sample'], check=True)
+                pipelines[sampling_method](
+                    config=f'{str(dir_ / "config.toml")}',
+                    sample=True
+                )
 
             for seed in range(n_seeds):
                 print(f'**Eval Iter: {sample_seed*n_seeds + (seed + 1)}/{n_seeds * n_datasets}**')

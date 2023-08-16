@@ -6,8 +6,9 @@ import tempfile
 from pathlib import Path
 import os
 from tab_ddpm.scripts.eval_catboost import train_catboost
+from tab_ddpm.scripts.eval_seeds import main as eval_seeds
 from sample_smote import sample_smote
-import subprocess
+#import subprocess
 
 parser = argparse.ArgumentParser()
 parser.add_argument('data_path', type=str)
@@ -94,5 +95,12 @@ config["smote_params"]["frac_samples"] = 2 ** config["smote_params"]["frac_sampl
 
 lib.dump_config(config, config["parent_dir"]+"config.toml")
 
-subprocess.run(['python', "scripts/eval_seeds.py", '--config', f'{config["parent_dir"]+"config.toml"}',
-                '10', "smote", eval_type, "catboost", "5"], check=True)
+#subprocess.run(['python', "scripts/eval_seeds.py", '--config', f'{config["parent_dir"]+"config.toml"}', '10', "smote", eval_type, "catboost", "5"], check=True)
+eval_seeds(
+    config=f'{config["parent_dir"]+"config.toml"}',
+    n_seeds=10,
+    sampling_method="smote",
+    eval_type=eval_type,
+    model_type="catboost",
+    n_datasets=5
+)

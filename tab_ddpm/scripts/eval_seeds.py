@@ -1,5 +1,5 @@
 import argparse
-import subprocess
+#import subprocess
 import tempfile
 from tab_ddpm import lib
 import os
@@ -9,13 +9,25 @@ from copy import deepcopy
 from tab_ddpm.scripts.eval_catboost import train_catboost
 from tab_ddpm.scripts.eval_mlp import train_mlp
 from tab_ddpm.scripts.eval_simple import train_simple
+from tab_ddpm.scripts.pipeline import main as pipeline_ddpm
+from tab_ddpm.smote.pipeline_smote import main as pipeline_smote
+from tab_ddpm.ctab_gan.pipeline_ctabgan import main as pipeline_ctab_gan
+from tab_ddpm.ctab_gan_plus.pipeline_ctabganp import main as pipeline_ctab_gan_plus
+from tab_ddpm.ctgan.pipeline_tvae import main as pipeline_tvae
 
 pipeline = {
     'ddpm': 'scripts/pipeline.py',
     'smote': 'smote/pipeline_smote.py',
-    'ctabgan': 'CTAB-GAN/pipeline_ctabgan.py',
-    'ctabgan-plus': 'CTAB-GAN-Plus/pipeline_ctabgan.py',
-    'tvae': 'CTGAN/pipeline_tvae.py'
+    'ctabgan': 'ctab_gan/pipeline_ctabgan.py',
+    'ctabgan-plus': 'ctab_gan_plus/pipeline_ctabgan.py',
+    'tvae': 'ctgan/pipeline_tvae.py'
+}
+pipelines = {
+    'ddpm': pipeline_ddpm,
+    'smote': pipeline_smote,
+    'ctabgan': pipeline_ctab_gan,
+    'ctabgan-plus': pipeline_ctab_gan_plus,
+    'tvae': pipeline_tvae
 }
 
 def eval_seeds(
@@ -50,7 +62,11 @@ def eval_seeds(
             temp_config['sample']['seed'] = sample_seed
             lib.dump_config(temp_config, dir_ / "config.toml")
             if eval_type != 'real' and n_datasets > 1:
-                subprocess.run(['python', f'{pipeline[sampling_method]}', '--config', f'{str(dir_ / "config.toml")}', '--sample'], check=True)
+                #subprocess.run(['python', f'{pipeline[sampling_method]}', '--config', f'{str(dir_ / "config.toml")}', '--sample'], check=True)
+                pipelines[sampling_method](
+                    config=f'{str(dir_ / "config.toml")}',
+                    sample=True
+                )
 
             T_dict = deepcopy(raw_config['eval']['T'])
             for seed in range(n_seeds):
@@ -95,17 +111,27 @@ def eval_seeds(
     lib.dump_config(raw_config, parent_dir / 'config.toml')
     return res
 
-def main():
+def main(
+    config=None,
+    n_seeds=10,
+    sampling_method="ddpm",
+    eval_type="synthetic",
+    model_type="catboost",
+    n_datasets=1,
+    no_dump=True
+):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', metavar='FILE')
-    parser.add_argument('n_seeds', type=int, default=10)
-    parser.add_argument('sampling_method', type=str, default="ddpm")
-    parser.add_argument('eval_type',  type=str, default='synthetic')
-    parser.add_argument('model_type',  type=str, default='catboost')
-    parser.add_argument('n_datasets', type=int, default=1)
-    parser.add_argument('--no_dump', action='store_false',  default=True)
+    parser.add_argument('--config', metavar='FILE', default=config)
+    parser.add_argument('n_seeds', type=int, default=n_seeds)
+    parser.add_argument('sampling_method', type=str, default=sampling_method)
+    parser.add_argument('eval_type',  type=str, default=eval_type)
+    parser.add_argument('model_type',  type=str, default=model_type)
+    parser.add_argument('n_datasets', type=int, default=n_datasets)
+    parser.add_argument('--no_dump', action='store_false', default=no_dump)
 
     args = parser.parse_args()
+    assert args.config
+
     raw_config = lib.load_config(args.config)
     eval_seeds(
         raw_config,
