@@ -32,7 +32,7 @@ setup(
         # smote
         "imbalanced-learn~=0.7.0",
         # tvae
-        "rdt",
+        "rdt>=1.3.0",
     ],
 
     classifiers=[
