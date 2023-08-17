@@ -22,7 +22,7 @@ setup(
         "pyarrow~=6.0.0",
         "rtdl~=0.0.9",
         "scikit-learn~=1.0.2",
-        "scipy~=1.7.2",
+        "scipy>=1.7.2",
         "skorch",
         "tomli-w~=0.4.0",
         "tomli~=1.2.2",
