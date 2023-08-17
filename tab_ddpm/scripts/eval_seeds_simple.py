@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from eval_simple import train_simple
+from .eval_simple import train_simple
 from copy import deepcopy
 import shutil
 from tab_ddpm.scripts.pipeline import main as pipeline_ddpm

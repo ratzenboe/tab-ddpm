@@ -13,7 +13,7 @@ from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.metrics import pairwise_distances
 from pathlib import Path
 import tempfile
-from eval_seeds import eval_seeds
+from .eval_seeds import eval_seeds
 import numpy as np
 #import subprocess
 import warnings
@@ -249,6 +249,7 @@ def main(
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', metavar='FILE', default=config)
     parser.add_argument('method', type=str, default=method)
+
     args = parser.parse_args()
 
     assert args.config

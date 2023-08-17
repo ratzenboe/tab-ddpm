@@ -4,9 +4,9 @@ import os
 import argparse
 from .train import train as _train
 from .sample import sample as _sample
-from eval_catboost import train_catboost
-from eval_mlp import train_mlp
-from eval_simple import train_simple
+from .eval_catboost import train_catboost
+from .eval_mlp import train_mlp
+from .eval_simple import train_simple
 import pandas as pd
 import matplotlib.pyplot as plt
 import delu as zero
