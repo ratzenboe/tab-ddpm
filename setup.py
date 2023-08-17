@@ -21,7 +21,7 @@ setup(
         "pandas~=1.3.4",
         "pyarrow~=6.0.0",
         "rtdl~=0.0.9",
-        "scikit-learn~=1.0.2",
+        "scikit-learn>=1.0.2",
         "scipy>=1.7.2",
         "skorch",
         "tomli-w~=0.4.0",
