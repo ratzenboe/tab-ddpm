@@ -5,17 +5,6 @@ from .eval_catboost import train_catboost
 from .eval_mlp import train_mlp
 from pathlib import Path
 
-parser = argparse.ArgumentParser()
-parser.add_argument('ds_name', type=str)
-parser.add_argument('model', type=str)
-parser.add_argument('tune_type', type=str)
-parser.add_argument('device', type=str)
-
-args = parser.parse_args()
-data_path = Path(f"data/{args.ds_name}")
-best_params = None
-
-assert args.tune_type in ("cv", "val")
 
 def _suggest(trial: optuna.trial.Trial, distribution: str, label: str, *args):
     return getattr(trial, f'suggest_{distribution}')(label, *args)
@@ -76,70 +65,100 @@ def suggest_catboost_params(trial):
 
     return params
 
-def objective(trial):
-    if args.model == "mlp":
-        params = suggest_mlp_params(trial)
-        train_func = train_mlp
-        T_dict = {
-            "seed": 0,
-            "normalization": "quantile",
-            "num_nan_policy": None,
-            "cat_nan_policy": None,
-            "cat_min_frequency": None,
-            "cat_encoding": "one-hot",
-            "y_policy": "default"
-        }
-    else:
-        params = suggest_catboost_params(trial)
-        train_func = train_catboost
-        T_dict = {
-            "seed": 0,
-            "normalization": None,
-            "num_nan_policy": None,
-            "cat_nan_policy": None,
-            "cat_min_frequency": None,
-            "cat_encoding": None,
-            "y_policy": "default"
-        }
-    trial.set_user_attr("params", params)
-    if args.tune_type == "cv":
-        score = 0.0
-        for fold in range(5):
+def main(
+    ds_name=None,
+    model=None,
+    tune_type=None,
+    device=None
+):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('ds_name', type=str, default=ds_name)
+    parser.add_argument('model', type=str, default=model)
+    parser.add_argument('tune_type', type=str, default=tune_type)
+    parser.add_argument('device', type=str, default=device)
+
+    #"""
+    args = parser.parse_args()
+
+    assert args.ds_name
+    assert args.model
+    assert args.tune_type
+    assert args.device
+
+    data_path = Path(f"data/{args.ds_name}")
+    best_params = None
+
+    assert args.tune_type in ("cv", "val")
+    #"""
+
+    def objective(trial):
+        if args.model == "mlp":
+            params = suggest_mlp_params(trial)
+            train_func = train_mlp
+            T_dict = {
+                "seed": 0,
+                "normalization": "quantile",
+                "num_nan_policy": None,
+                "cat_nan_policy": None,
+                "cat_min_frequency": None,
+                "cat_encoding": "one-hot",
+                "y_policy": "default"
+            }
+        else:
+            params = suggest_catboost_params(trial)
+            train_func = train_catboost
+            T_dict = {
+                "seed": 0,
+                "normalization": None,
+                "num_nan_policy": None,
+                "cat_nan_policy": None,
+                "cat_min_frequency": None,
+                "cat_encoding": None,
+                "y_policy": "default"
+            }
+        trial.set_user_attr("params", params)
+        if args.tune_type == "cv":
+            score = 0.0
+            for fold in range(5):
+                metrics_report = train_func(
+                    parent_dir=None,
+                    real_data_path=data_path / f"kfolds/{fold}",
+                    eval_type="real",
+                    T_dict=T_dict,
+                    params=params,
+                    change_val=False,
+                    device=args.device
+                )
+                score += metrics_report.get_val_score()
+            score /= 5
+
+        elif args.tune_type == "val":
             metrics_report = train_func(
                 parent_dir=None,
-                real_data_path=data_path / f"kfolds/{fold}",
+                real_data_path=data_path,
                 eval_type="real",
                 T_dict=T_dict,
                 params=params,
                 change_val=False,
                 device=args.device
             )
-            score += metrics_report.get_val_score()
-        score /= 5
+            score = metrics_report.get_val_score()
+        
+        return score
 
-    elif args.tune_type == "val":
-        metrics_report = train_func(
-            parent_dir=None,
-            real_data_path=data_path,
-            eval_type="real",
-            T_dict=T_dict,
-            params=params,
-            change_val=False,
-            device=args.device
-        )
-        score = metrics_report.get_val_score()
-    
-    return score
+    study = optuna.create_study(
+        direction='maximize',
+        sampler=optuna.samplers.TPESampler(seed=0),
+    )
 
-study = optuna.create_study(
-    direction='maximize',
-    sampler=optuna.samplers.TPESampler(seed=0),
-)
+    study.optimize(objective, n_trials=100, show_progress_bar=True)
+        
+    bets_params = study.best_trial.user_attrs['params']
 
-study.optimize(objective, n_trials=100, show_progress_bar=True)
-    
-bets_params = study.best_trial.user_attrs['params']
+    best_params_path = f"tuned_models/{args.model}/{args.ds_name}_{args.tune_type}.json"
 
-best_params_path = f"tuned_models/{args.model}/{args.ds_name}_{args.tune_type}.json"
+    lib.dump_json(bets_params, best_params_path)
+    return study
 
-lib.dump_json(bets_params, best_params_path)
+if __name__ == '__main__':
+    main()

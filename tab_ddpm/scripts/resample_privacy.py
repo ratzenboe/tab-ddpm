@@ -242,11 +242,17 @@ def calc_privacy(config_path, method, seed=0):
     lib.dump_json({"privacy": privacy_val}, os.path.join(config["parent_dir"], "privacy.json"))
     print(f"Elapsed tine:{str(timer)}")
 
-def main():
+def main(
+    config=None,
+    method=None
+):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', metavar='FILE')
-    parser.add_argument('method', type=str)
+    parser.add_argument('--config', metavar='FILE', default=config)
+    parser.add_argument('method', type=str, default=method)
     args = parser.parse_args()
+
+    assert args.config
+    assert args.method
 
     calc_privacy(
         args.config,

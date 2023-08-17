@@ -120,17 +120,28 @@ def eval_seeds(
     lib.dump_config(raw_config,  parent_dir / 'config.toml')
     return res
 
-def main():
+def main(
+    config=None,
+    n_seeds=10,
+    sampling_method="ddpm",
+    eval_type="synthetic",
+    model_type="catboost",
+    n_datasets=1,
+    no_dump=True
+):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', metavar='FILE')
-    parser.add_argument('n_seeds', type=int, default=10)
-    parser.add_argument('sampling_method', type=str, default="ddpm")
-    parser.add_argument('eval_type',  type=str, default='synthetic')
-    parser.add_argument('model_type',  type=str, default='catboost')
-    parser.add_argument('n_datasets', type=int, default=1)
-    parser.add_argument('--no_dump', action='store_false',  default=True)
+    parser.add_argument('--config', metavar='FILE', default=config)
+    parser.add_argument('n_seeds', type=int, default=n_seeds)
+    parser.add_argument('sampling_method', type=str, default=sampling_method)
+    parser.add_argument('eval_type',  type=str, default=eval_type)
+    parser.add_argument('model_type',  type=str, default=model_type)
+    parser.add_argument('n_datasets', type=int, default=n_datasets)
+    parser.add_argument('--no_dump', action='store_false',  default=no_dump)
 
     args = parser.parse_args()
+
+    assert args.config
+
     raw_config = lib.load_config(args.config)
     eval_seeds(
         raw_config,
