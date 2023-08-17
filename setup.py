@@ -18,7 +18,7 @@ setup(
         "libzero~=0.0.8",
         "numpy>=1.21.4",
         "optuna~=2.10.1",
-        "pandas~=1.3.4",
+        "pandas>=1.3.4",
         "pyarrow~=6.0.0",
         "rtdl~=0.0.9",
         "scikit-learn~=1.2.0",
