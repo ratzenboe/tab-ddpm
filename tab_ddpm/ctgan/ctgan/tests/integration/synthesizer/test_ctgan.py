@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from ctgan.synthesizers.ctgan import CTGANSynthesizer
+from tab_ddpm.ctgan.ctgan import CTGANSynthesizer
 
 
 def test_ctgan_no_categoricals():

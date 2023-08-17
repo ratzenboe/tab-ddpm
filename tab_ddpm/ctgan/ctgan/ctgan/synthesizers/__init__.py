@@ -1,6 +1,7 @@
 """Synthesizers module."""
 
-from .ctgan import CTGANSynthesizer
+from .base import BaseSynthesizer, random_state
+from .ctgan import CTGANSynthesizer, Discriminator, Generator, Residual
 from .tvae import TVAESynthesizer
 
 __all__ = (

@@ -88,8 +88,8 @@ In this example we load the [Adult Census Dataset](https://archive.ics.uci.edu/m
 
 
 ```python3
-from ctgan import CTGANSynthesizer
-from ctgan import load_demo
+from tab_ddpm.ctgan.ctgan import CTGANSynthesizer
+from tab_ddpm.ctgan.ctgan import load_demo
 
 data = load_demo()
 

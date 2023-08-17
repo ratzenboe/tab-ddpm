@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 from sklearn import datasets
 
-from ctgan.synthesizers.tvae import TVAESynthesizer
+from tab_ddpm.ctgan.ctgan import TVAESynthesizer
 
 
 def test_tvae(tmpdir):

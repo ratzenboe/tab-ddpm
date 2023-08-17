@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, call, patch
 import numpy as np
 import torch
 
-from ctgan.synthesizers.base import BaseSynthesizer, random_state
+from tab_ddpm.ctgan.ctgan import BaseSynthesizer, random_state
 
 
 @patch('ctgan.synthesizers.base.torch')

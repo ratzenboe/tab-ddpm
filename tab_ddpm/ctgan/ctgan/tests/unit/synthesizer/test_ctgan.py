@@ -7,8 +7,8 @@ import pandas as pd
 import pytest
 import torch
 
-from ctgan.data_transformer import SpanInfo
-from ctgan.synthesizers.ctgan import CTGANSynthesizer, Discriminator, Generator, Residual
+from tab_ddpm.ctgan.ctgan.data_transformer import SpanInfo
+from tab_ddpm.ctgan.ctgan import CTGANSynthesizer, Discriminator, Generator, Residual
 
 
 class TestDiscriminator(TestCase):

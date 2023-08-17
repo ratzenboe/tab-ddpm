@@ -2,7 +2,7 @@ from tab_ddpm import lib
 import os
 import numpy as np
 import argparse
-from ctgan.ctgan import TVAESynthesizer
+from tab_ddpm.ctgan.ctgan import TVAESynthesizer
 from pathlib import Path
 import torch
 import pickle
@@ -14,7 +14,7 @@ warnings.filterwarnings("ignore", category=ConvergenceWarning)
 def train_tvae(
     parent_dir,
     real_data_path,
-    train_params = {"batch_size": 512},
+    train_params = {"batch_size": 512},2
     change_val=False,
     device = "cpu"
 ):
