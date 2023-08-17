@@ -1,10 +1,12 @@
 
+from collections import namedtuple
 def get_argparse_defaults(parser):
     defaults = {}
     for action in parser._actions:
         if action.dest != "help" and hasattr(action, "default"):
             defaults[action.dest] = action.default
-    return defaults
+    ArgsDefaults = namedtuple("ArgsDefaults", defaults)
+    return ArgsDefaults(**defaults)
 
 def try_argparse(parser, *args, **kwargs):
     if __name__ == '__main__':
