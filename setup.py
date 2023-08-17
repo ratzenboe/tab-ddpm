@@ -13,7 +13,7 @@ setup(
         "torch>=1.10.1",
         "catboost~=1.0.3",
         "category-encoders~=2.3.0",
-        "dython~=0.5.1",
+        "dython>=0.5.1",
         "icecream~=2.1.2",
         "libzero~=0.0.8",
         "numpy>=1.21.4",
