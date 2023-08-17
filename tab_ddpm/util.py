@@ -9,4 +9,4 @@ def get_argparse_defaults(parser):
 def try_argparse(parser, *args, **kwargs):
     if __name__ == '__main__':
         return parser.parse_args(*args, **kwargs)
-    assert get_argparse_defaults(parser)
+    return get_argparse_defaults(parser)
