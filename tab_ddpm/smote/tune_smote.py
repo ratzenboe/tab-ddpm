@@ -2,6 +2,7 @@ import optuna
 from tab_ddpm import lib
 from copy import deepcopy
 import argparse
+from tab_ddpm.util import try_argparse
 import tempfile
 from pathlib import Path
 import os
@@ -14,7 +15,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('data_path', type=str)
 parser.add_argument('eval_type', type=str)
 
-args = parser.parse_args()
+args = try_argparse(parser)
 real_data_path = args.data_path
 eval_type = args.eval_type
 

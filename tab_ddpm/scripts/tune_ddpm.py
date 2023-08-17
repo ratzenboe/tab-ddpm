@@ -5,6 +5,7 @@ import optuna
 from copy import deepcopy
 import shutil
 import argparse
+from tab_ddpm.util import try_argparse
 from pathlib import Path
 from tab_ddpm.scripts.eval_seeds import main as eval_seeds
 from tab_ddpm.scripts.pipeline import main as pipeline
@@ -47,7 +48,7 @@ def main(
     parser.add_argument('--eval_seeds', action='store_true',  default=eval_seeds)
 
     #"""
-    args = parser.parse_args()
+    args = try_argparse(parser)
 
     assert args.ds_name
     assert args.train_size

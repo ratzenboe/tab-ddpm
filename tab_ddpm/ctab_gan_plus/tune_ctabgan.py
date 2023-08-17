@@ -6,6 +6,7 @@ from tab_ddpm import lib
 import os
 import optuna
 import argparse
+from tab_ddpm.util import try_argparse
 from pathlib import Path
 from .train_sample_ctabganp import train_ctabgan, sample_ctabgan
 from tab_ddpm.scripts.eval_catboost import train_catboost
@@ -17,7 +18,7 @@ parser.add_argument('train_size', type=int)
 parser.add_argument('eval_type', type=str)
 parser.add_argument('device', type=str)
 
-args = parser.parse_args()
+args = try_argparse(parser)
 real_data_path = args.data_path
 eval_type = args.eval_type
 train_size = args.train_size

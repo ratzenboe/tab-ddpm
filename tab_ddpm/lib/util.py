@@ -1,4 +1,5 @@
 import argparse
+from tab_ddpm.util import try_argparse
 import atexit
 import enum
 import json
@@ -204,7 +205,7 @@ def start(
     parser.add_argument('--continue', action='store_true', dest='continue_')
     if argv is None:
         program = __main__.__file__
-        args = parser.parse_args()
+        args = try_argparse(parser)
     else:
         program = argv[0]
         try:
@@ -216,7 +217,7 @@ def start(
                 ' the project root) to the script/notebook.'
             )
             raise
-    args = parser.parse_args(argv)
+    args = try_argparse(parser, argv)
 
     snapshot_dir = os.environ.get('SNAPSHOT_PATH')
     if snapshot_dir and Path(snapshot_dir).joinpath('CHECKPOINTS_RESTORED').exists():

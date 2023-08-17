@@ -3,6 +3,7 @@ Adapted from https://github.com/Team-TUD/CTAB-GAN/tree/main/model/eval
 """
 
 import argparse
+from tab_ddpm.util import try_argparse
 from tab_ddpm import lib
 import os
 import shutil
@@ -250,7 +251,7 @@ def main(
     parser.add_argument('--config', metavar='FILE', default=config)
     parser.add_argument('method', type=str, default=method)
 
-    args = parser.parse_args()
+    args = try_argparse(parser)
 
     assert args.config
     assert args.method

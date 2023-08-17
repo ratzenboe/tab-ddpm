@@ -2,6 +2,7 @@ from tab_ddpm import lib
 import os
 import numpy as np
 import argparse
+from tab_ddpm.util import try_argparse
 from .model.ctabgan import CTABGAN
 from pathlib import Path
 import torch

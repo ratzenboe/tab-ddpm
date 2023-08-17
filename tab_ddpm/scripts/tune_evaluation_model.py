@@ -1,6 +1,7 @@
 import optuna
 from tab_ddpm import lib
 import argparse
+from tab_ddpm.util import try_argparse
 from .eval_catboost import train_catboost
 from .eval_mlp import train_mlp
 from pathlib import Path
@@ -78,7 +79,7 @@ def main(
     parser.add_argument('device', type=str, default=device)
 
     #"""
-    args = parser.parse_args()
+    args = try_argparse(parser)
 
     assert args.ds_name
     assert args.model

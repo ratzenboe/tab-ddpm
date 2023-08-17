@@ -2,6 +2,7 @@ from tab_ddpm import lib
 import os
 import numpy as np
 import argparse
+from tab_ddpm.util import try_argparse
 from tab_ddpm.ctgan.ctgan import TVAESynthesizer
 from pathlib import Path
 import torch
@@ -107,7 +108,7 @@ def main():
     parser.add_argument('real_data_path', type=str)
     parser.add_argument('parent_dir', type=str)
     parser.add_argument('train_size', type=int)
-    args = parser.parse_args()
+    args = try_argparse(parser)
 
     ctabgan = train_tvae(args.parent_dir, args.real_data_path, change_val=True)
     sample_tvae(ctabgan, args.parent_dir, args.real_data_path, args.train_size, change_val=True)

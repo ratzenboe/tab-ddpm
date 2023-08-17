@@ -1,6 +1,7 @@
 """CLI."""
 
 import argparse
+from tab_ddpm.util import try_argparse
 
 from tab_ddpm.ctgan.ctgan.data import read_csv, read_tsv, write_tsv
 from tab_ddpm.ctgan.ctgan import CTGANSynthesizer
@@ -55,7 +56,7 @@ def _parse_args():
     parser.add_argument('data', help='Path to training data')
     parser.add_argument('output', help='Path of the output file')
 
-    return parser.parse_args()
+    return try_argparse(parser)
 
 
 def main():

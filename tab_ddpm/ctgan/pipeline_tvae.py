@@ -2,6 +2,7 @@ import tomli
 import shutil
 import os
 import argparse
+from tab_ddpm.util import try_argparse
 from .train_sample_tvae import train_tvae, sample_tvae
 from tab_ddpm.scripts.eval_catboost import train_catboost
 import delu as zero
@@ -33,7 +34,7 @@ def main(
     parser.add_argument('--eval', action='store_true',  default=eval)
     parser.add_argument('--change_val', action='store_true',  default=change_val)
 
-    args = parser.parse_args()
+    args = try_argparse(parser)
     assert args.config
 
     raw_config = lib.load_config(args.config)

@@ -1,6 +1,7 @@
 import os
 from tab_ddpm import lib
 import argparse
+from tab_ddpm.util import try_argparse
 import numpy as np
 from pathlib import Path
 from typing import Union, Any
@@ -202,7 +203,7 @@ def main():
     parser.add_argument('data_path',  type=str)
     parser.add_argument('method', type=str)
 
-    args = parser.parse_args()
+    args = try_argparse(parser)
 
     sample_smote(args.data_path, args.method, save=False)
 

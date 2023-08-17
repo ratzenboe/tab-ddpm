@@ -1,4 +1,5 @@
 import argparse
+from tab_ddpm.util import try_argparse
 #import subprocess
 import tempfile
 from tab_ddpm import lib
@@ -129,7 +130,7 @@ def main(
     parser.add_argument('n_datasets', type=int, default=n_datasets)
     parser.add_argument('--no_dump', action='store_false', default=no_dump)
 
-    args = parser.parse_args()
+    args = try_argparse(parser)
     assert args.config
 
     raw_config = lib.load_config(args.config)
