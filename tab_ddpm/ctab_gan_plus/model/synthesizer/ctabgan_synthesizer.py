@@ -8,7 +8,7 @@ from torch.nn import functional as F
 from torch.nn import (Dropout, LeakyReLU, Linear, Module, ReLU, Sequential,
 Conv2d, ConvTranspose2d, Sigmoid, init, BCELoss, CrossEntropyLoss,SmoothL1Loss,LayerNorm)
 from .transformer import ImageTransformer,DataTransformer
-from .privacy_utils.rdp_accountant import compute_rdp, get_privacy_spent
+from tab_ddpm.ctab_gan_plus.privacy_utils.rdp_accountant import compute_rdp, get_privacy_spent
 from tqdm import tqdm, trange
 import time
 
