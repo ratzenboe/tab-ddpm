@@ -16,7 +16,7 @@ setup(
         "dython~=0.5.1",
         "icecream~=2.1.2",
         "libzero~=0.0.8",
-        "numpy~=1.21.4",
+        "numpy>=1.21.4",
         "optuna~=2.10.1",
         "pandas~=1.3.4",
         "pyarrow~=6.0.0",
