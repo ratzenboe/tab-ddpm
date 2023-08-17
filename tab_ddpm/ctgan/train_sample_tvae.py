@@ -14,7 +14,7 @@ warnings.filterwarnings("ignore", category=ConvergenceWarning)
 def train_tvae(
     parent_dir,
     real_data_path,
-    train_params = {"batch_size": 512},2
+    train_params = {"batch_size": 512},
     change_val=False,
     device = "cpu"
 ):
