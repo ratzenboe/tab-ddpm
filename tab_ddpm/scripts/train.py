@@ -131,8 +131,7 @@ def train(
     # train_loader = lib.prepare_beton_loader(dataset, split='train', batch_size=batch_size)
     train_loader = lib.prepare_fast_dataloader(dataset, split='train', batch_size=batch_size)
 
-
-
+    # Define diffusion model
     diffusion = GaussianMultinomialDiffusion(
         num_classes=K,
         num_numerical_features=num_numerical_features,

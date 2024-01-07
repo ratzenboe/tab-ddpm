@@ -7,7 +7,7 @@ import shutil
 import argparse
 from tab_ddpm.util import try_argparse
 from pathlib import Path
-from tab_ddpm.scripts.eval_seeds import main as eval_seeds
+from tab_ddpm.scripts.eval_seeds import main as _eval_seeds
 from tab_ddpm.scripts.pipeline import main as pipeline
 
 pipeline_path = f'tab_ddpm/scripts/pipeline.py'
@@ -165,7 +165,7 @@ def main(
     if args.eval_seeds:
         best_exp = str(parent_path / f'{prefix}_best/config.toml')
         #subprocess.run(['python', f'{eval_seeds}', '--config', f'{best_exp}', '10', "ddpm", eval_type, args.eval_model, '5'], check=True)
-        eval_seeds(
+        _eval_seeds(
             config=f'{best_exp}',
             n_seeds=10,
             sampling_method="ddpm",

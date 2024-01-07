@@ -442,33 +442,33 @@ def transform_dataset(
     return dataset
 
 
-def build_dataset(
-    path: Union[str, Path],
-    transformations: Transformations,
-    cache: bool
-) -> Dataset:
-    path = Path(path)
-    dataset = Dataset.from_dir(path)
-    return transform_dataset(dataset, transformations, path if cache else None)
-
-
-def prepare_tensors(
-    dataset: Dataset, device: Union[str, torch.device]
-) -> Tuple[Optional[TensorDict], Optional[TensorDict], TensorDict]:
-    X_num, X_cat, Y = (
-        None if x is None else {k: torch.as_tensor(v) for k, v in x.items()}
-        for x in [dataset.X_num, dataset.X_cat, dataset.y]
-    )
-    if device.type != 'cpu':
-        X_num, X_cat, Y = (
-            None if x is None else {k: v.to(device) for k, v in x.items()}
-            for x in [X_num, X_cat, Y]
-        )
-    assert X_num is not None
-    assert Y is not None
-    if not dataset.is_multiclass:
-        Y = {k: v.float() for k, v in Y.items()}
-    return X_num, X_cat, Y
+# def build_dataset(
+#     path: Union[str, Path],
+#     transformations: Transformations,
+#     cache: bool
+# ) -> Dataset:
+#     path = Path(path)
+#     dataset = Dataset.from_dir(path)
+#     return transform_dataset(dataset, transformations, path if cache else None)
+#
+#
+# def prepare_tensors(
+#     dataset: Dataset, device: Union[str, torch.device]
+# ) -> Tuple[Optional[TensorDict], Optional[TensorDict], TensorDict]:
+#     X_num, X_cat, Y = (
+#         None if x is None else {k: torch.as_tensor(v) for k, v in x.items()}
+#         for x in [dataset.X_num, dataset.X_cat, dataset.y]
+#     )
+#     if device.type != 'cpu':
+#         X_num, X_cat, Y = (
+#             None if x is None else {k: v.to(device) for k, v in x.items()}
+#             for x in [X_num, X_cat, Y]
+#         )
+#     assert X_num is not None
+#     assert Y is not None
+#     if not dataset.is_multiclass:
+#         Y = {k: v.float() for k, v in Y.items()}
+#     return X_num, X_cat, Y
 
 ###############
 ## DataLoader##
@@ -502,48 +502,48 @@ class TabDataset(torch.utils.data.Dataset):
             x = torch.cat([x, self.X_cat[idx]], dim=0)
         return x.float(), out_dict
 
-def prepare_dataloader(
-    dataset : Dataset,
-    split : str,
-    batch_size: int,
-):
+# def prepare_dataloader(
+#     dataset : Dataset,
+#     split : str,
+#     batch_size: int,
+# ):
+#
+#     torch_dataset = TabDataset(dataset, split)
+#     loader = torch.utils.data.DataLoader(
+#         torch_dataset,
+#         batch_size=batch_size,
+#         shuffle=(split == 'train'),
+#         num_workers=1,
+#     )
+#     while True:
+#         yield from loader
+#
+# def prepare_torch_dataloader(
+#     dataset : Dataset,
+#     split : str,
+#     shuffle : bool,
+#     batch_size: int,
+# ) -> torch.utils.data.DataLoader:
+#
+#     torch_dataset = TabDataset(dataset, split)
+#     loader = torch.utils.data.DataLoader(torch_dataset, batch_size=batch_size, shuffle=shuffle, num_workers=1)
+#
+#     return loader
 
-    torch_dataset = TabDataset(dataset, split)
-    loader = torch.utils.data.DataLoader(
-        torch_dataset,
-        batch_size=batch_size,
-        shuffle=(split == 'train'),
-        num_workers=1,
-    )
-    while True:
-        yield from loader
-
-def prepare_torch_dataloader(
-    dataset : Dataset,
-    split : str,
-    shuffle : bool,
-    batch_size: int,
-) -> torch.utils.data.DataLoader:
-
-    torch_dataset = TabDataset(dataset, split)
-    loader = torch.utils.data.DataLoader(torch_dataset, batch_size=batch_size, shuffle=shuffle, num_workers=1)
-
-    return loader
-
-def dataset_from_csv(paths : Dict[str, str], cat_features, target, T):
-    assert 'train' in paths
-    y = {}
-    X_num = {}
-    X_cat = {} if len(cat_features) else None
-    for split in paths.keys():
-        df = pd.read_csv(paths[split])
-        y[split] = df[target].to_numpy().astype(float)
-        if X_cat is not None:
-            X_cat[split] = df[cat_features].to_numpy().astype(str)
-        X_num[split] = df.drop(cat_features + [target], axis=1).to_numpy().astype(float)
-
-    dataset = Dataset(X_num, X_cat, y, {}, None, len(np.unique(y['train'])))
-    return transform_dataset(dataset, T, None)
+# def dataset_from_csv(paths : Dict[str, str], cat_features, target, T):
+#     assert 'train' in paths
+#     y = {}
+#     X_num = {}
+#     X_cat = {} if len(cat_features) else None
+#     for split in paths.keys():
+#         df = pd.read_csv(paths[split])
+#         y[split] = df[target].to_numpy().astype(float)
+#         if X_cat is not None:
+#             X_cat[split] = df[cat_features].to_numpy().astype(str)
+#         X_num[split] = df.drop(cat_features + [target], axis=1).to_numpy().astype(float)
+#
+#     dataset = Dataset(X_num, X_cat, y, {}, None, len(np.unique(y['train'])))
+#     return transform_dataset(dataset, T, None)
 
 class FastTensorDataLoader:
     """

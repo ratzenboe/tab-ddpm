@@ -3,7 +3,7 @@ parent_dir = "exp/higgs-small/ddpm_cb_best"
 real_data_path = "data/higgs-small/"
 model_type = "mlp"
 num_numerical_features = 28
-device = "cuda:1"
+device = "cpu"
 
 [model_params]
 d_in = 28
@@ -41,8 +41,8 @@ cat_encoding = "__none__"
 y_policy = "default"
 
 [sample]
-num_samples = 502000
-batch_size = 60000
+num_samples = 50000
+batch_size = 10000
 seed = 0
 
 [eval.type]

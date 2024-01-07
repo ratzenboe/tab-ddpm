@@ -206,7 +206,9 @@ class GaussianMultinomialDiffusion(torch.nn.Module):
         B, C = x.shape[:2]
         assert t.shape == (B,)
 
-        model_variance = torch.cat([self.posterior_variance[1].unsqueeze(0).to(x.device), (1. - self.alphas)[1:]], dim=0)
+        model_variance = torch.cat(
+            [self.posterior_variance[1].unsqueeze(0).to(x.device), (1. - self.alphas)[1:]], dim=0
+        )
         # model_variance = self.posterior_variance.to(x.device)
         model_log_variance = torch.log(model_variance)
 

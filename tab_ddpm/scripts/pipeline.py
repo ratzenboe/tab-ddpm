@@ -3,13 +3,8 @@ import shutil
 import os
 import argparse
 from tab_ddpm.util import try_argparse
-from .train import train as _train
-from .sample import sample as _sample
-from .eval_catboost import train_catboost
-from .eval_mlp import train_mlp
-from .eval_simple import train_simple
-import pandas as pd
-import matplotlib.pyplot as plt
+from tab_ddpm.scripts.train import train as _train
+from tab_ddpm.scripts.sample import sample as _sample
 import delu as zero
 from tab_ddpm import lib
 import torch
@@ -87,35 +82,35 @@ def main(
         )
 
     save_file(os.path.join(raw_config['parent_dir'], 'info.json'), os.path.join(raw_config['real_data_path'], 'info.json'))
-    if args.eval:
-        if raw_config['eval']['type']['eval_model'] == 'catboost':
-            train_catboost(
-                parent_dir=raw_config['parent_dir'],
-                real_data_path=raw_config['real_data_path'],
-                eval_type=raw_config['eval']['type']['eval_type'],
-                T_dict=raw_config['eval']['T'],
-                seed=raw_config['seed'],
-                change_val=args.change_val
-            )
-        elif raw_config['eval']['type']['eval_model'] == 'mlp':
-            train_mlp(
-                parent_dir=raw_config['parent_dir'],
-                real_data_path=raw_config['real_data_path'],
-                eval_type=raw_config['eval']['type']['eval_type'],
-                T_dict=raw_config['eval']['T'],
-                seed=raw_config['seed'],
-                change_val=args.change_val,
-                device=device
-            )
-        elif raw_config['eval']['type']['eval_model'] == 'simple':
-            train_simple(
-                parent_dir=raw_config['parent_dir'],
-                real_data_path=raw_config['real_data_path'],
-                eval_type=raw_config['eval']['type']['eval_type'],
-                T_dict=raw_config['eval']['T'],
-                seed=raw_config['seed'],
-                change_val=args.change_val
-            )
+    # if args.eval:
+    #     if raw_config['eval']['type']['eval_model'] == 'catboost':
+    #         train_catboost(
+    #             parent_dir=raw_config['parent_dir'],
+    #             real_data_path=raw_config['real_data_path'],
+    #             eval_type=raw_config['eval']['type']['eval_type'],
+    #             T_dict=raw_config['eval']['T'],
+    #             seed=raw_config['seed'],
+    #             change_val=args.change_val
+    #         )
+    #     elif raw_config['eval']['type']['eval_model'] == 'mlp':
+    #         train_mlp(
+    #             parent_dir=raw_config['parent_dir'],
+    #             real_data_path=raw_config['real_data_path'],
+    #             eval_type=raw_config['eval']['type']['eval_type'],
+    #             T_dict=raw_config['eval']['T'],
+    #             seed=raw_config['seed'],
+    #             change_val=args.change_val,
+    #             device=device
+    #         )
+    #     elif raw_config['eval']['type']['eval_model'] == 'simple':
+    #         train_simple(
+    #             parent_dir=raw_config['parent_dir'],
+    #             real_data_path=raw_config['real_data_path'],
+    #             eval_type=raw_config['eval']['type']['eval_type'],
+    #             T_dict=raw_config['eval']['T'],
+    #             seed=raw_config['seed'],
+    #             change_val=args.change_val
+    #         )
 
     print(f'Elapsed time: {str(timer)}')
 
